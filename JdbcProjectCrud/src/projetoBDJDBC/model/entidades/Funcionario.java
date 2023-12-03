@@ -14,6 +14,18 @@ public class Funcionario extends Pessoa {
 	public Funcionario() {
 		super();
 	}
+	
+	public Funcionario(String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email,
+			Endereco endereco, String numeroMatricula, double salario, double comissao, String cargo,
+			Date DataDeContratacao) {
+		super(nomePessoa, sobrenomePessoa, cpfPessoa, email, endereco);
+		this.numeroMatricula = numeroMatricula;
+		this.salario = salario;
+		this.salario = salario;
+		this.comissao = comissao;
+		this.cargo = cargo;
+		this.DataDeContratacao = DataDeContratacao;
+	}
 
 	public Funcionario(int idPessoa, String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email,
 			Endereco endereco, String numeroMatricula, double salario, double comissao, String cargo,

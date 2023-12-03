@@ -7,9 +7,7 @@ public class Endereco {
 	private String cidade;
 	private String estado;
 
-	public Endereco() {
-		super();
-	}
+	public Endereco() { }
 
 	public Endereco(String cidade, String estado) {
 		super();

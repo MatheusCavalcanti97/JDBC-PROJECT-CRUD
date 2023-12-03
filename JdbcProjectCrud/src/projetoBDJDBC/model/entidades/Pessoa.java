@@ -11,8 +11,16 @@ public abstract class Pessoa {
 	public String email;
 	public Endereco endereco;
 
-	public Pessoa() {
+	public Pessoa() { }
+
+	public Pessoa(String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email, Endereco endereco) {
 		super();
+
+		this.nomePessoa = nomePessoa;
+		this.sobrenomePessoa = sobrenomePessoa;
+		this.cpfPessoa = cpfPessoa;
+		this.email = email;
+		this.endereco = endereco;
 	}
 
 	public Pessoa(int idPessoa, String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email,

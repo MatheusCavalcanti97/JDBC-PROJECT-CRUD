@@ -11,7 +11,7 @@ public class ConectionBD {
 	private static final String PASSWORD = "12345";
 	private static final String JDBCDRIVER = "org.postgresql.Driver";
 	private static ConectionBD instance;
-	public static Connection conn = null;
+	public static Connection conn;
 
 	public static synchronized ConectionBD getInstance() {
 

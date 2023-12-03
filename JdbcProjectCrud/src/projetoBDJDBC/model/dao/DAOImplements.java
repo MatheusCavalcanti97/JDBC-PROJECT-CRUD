@@ -2,7 +2,7 @@ package projetoBDJDBC.model.dao;
 
 import java.util.List;
 
-public class DaoImplements<T> implements Dao<T> {
+public class DAOImplements<T> implements DAO<T> {
 
 	@Override
 	public void inserir(T e) {

@@ -7,13 +7,11 @@ public class Cliente extends Pessoa {
 
 	private Date dataDeCadastro;
 
-	public Cliente() {
-		super();
-	}
+	public Cliente() {}
 
-	public Cliente(int idPessoa, String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email,
+	public Cliente(String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email,
 			Endereco endereco, Date dataDeCadastro) {
-		super(idPessoa, nomePessoa, sobrenomePessoa, cpfPessoa, email, endereco);
+		super(nomePessoa, sobrenomePessoa, cpfPessoa, email, endereco);
 		this.dataDeCadastro = dataDeCadastro;
 	}
 
