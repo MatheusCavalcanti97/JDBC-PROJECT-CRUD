@@ -6,10 +6,11 @@ import java.util.Calendar;
 
 import projetoBDJDBC.exception.ApenasLetrasException;
 import projetoBDJDBC.exception.AtributosNaoNulosNaoVaziosException;
+import projetoBDJDBC.exception.CpfException;
 
 public class ValidacaoProjectJDBCIO {
 
-	public static boolean validaCpf(String cpf) {
+	public static boolean validaCpf(String cpf) throws CpfException {
 		Boolean var = true;
 		String verifyCpf = cpf.replaceAll(" ", "");
 		verifyCpf = verifyCpf.trim().replaceAll(" ", "");

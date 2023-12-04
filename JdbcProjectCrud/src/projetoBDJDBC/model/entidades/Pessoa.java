@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public abstract class Pessoa {
 
-	public int idPessoa;
+	public Integer idPessoa;
 	public String nomePessoa;
 	public String sobrenomePessoa;
 	public String cpfPessoa;
@@ -23,7 +23,7 @@ public abstract class Pessoa {
 		this.endereco = endereco;
 	}
 
-	public Pessoa(int idPessoa, String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email,
+	public Pessoa(Integer idPessoa, String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email,
 			Endereco endereco) {
 		super();
 		this.idPessoa = idPessoa;
@@ -34,11 +34,11 @@ public abstract class Pessoa {
 		this.endereco = endereco;
 	}
 
-	public int getIdPessoa() {
+	public Integer getIdPessoa() {
 		return idPessoa;
 	}
 
-	public void setIdPessoa(int idPessoa) {
+	public void setIdPessoa(Integer idPessoa) {
 		this.idPessoa = idPessoa;
 	}
 

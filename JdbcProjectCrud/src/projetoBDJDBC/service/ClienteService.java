@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import projetoBDJDBC.exception.ClienteNãoInseridoException;
+import projetoBDJDBC.exception.ListaVaziaException;
 import projetoBDJDBC.model.dao.ClienteDAOImplements;
 import projetoBDJDBC.model.entidades.Cliente;
 
@@ -29,13 +30,11 @@ public class ClienteService {
 
 	}
 
-	public List<Cliente> listarTodos(Cliente c) {
-
-		return null;
+	public List<Cliente> listarTodos() throws ClassNotFoundException, SQLException, ListaVaziaException {
+		return cDAO.listarTodos();
 	}
 
 	public void buscarPorID(Integer id) {
-
 	}
 
 }

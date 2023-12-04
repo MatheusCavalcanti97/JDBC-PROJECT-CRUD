@@ -27,7 +27,7 @@ public class Funcionario extends Pessoa {
 		this.DataDeContratacao = DataDeContratacao;
 	}
 
-	public Funcionario(int idPessoa, String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email,
+	public Funcionario(Integer idPessoa, String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email,
 			Endereco endereco, String numeroMatricula, double salario, double comissao, String cargo,
 			Date DataDeContratacao) {
 		super(idPessoa, nomePessoa, sobrenomePessoa, cpfPessoa, email, endereco);

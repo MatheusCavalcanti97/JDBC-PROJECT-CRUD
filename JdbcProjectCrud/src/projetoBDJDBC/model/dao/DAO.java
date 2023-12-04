@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import projetoBDJDBC.exception.ClienteNãoInseridoException;
+import projetoBDJDBC.exception.ListaVaziaException;
 
 public interface DAO<T> {
 
@@ -13,8 +14,8 @@ public interface DAO<T> {
 
 	public void atualizar(T e);
 
-	public List<T> listarTodos(T e);
+	public List<T> listarTodos() throws ClassNotFoundException, SQLException, ListaVaziaException;
 
-	public void buscarPorId(Integer id);
+	public void buscarPorId(String str);
 
 }
