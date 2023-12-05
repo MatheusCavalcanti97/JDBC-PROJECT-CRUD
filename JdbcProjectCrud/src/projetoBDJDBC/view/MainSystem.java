@@ -16,7 +16,6 @@ public class MainSystem {
 				System.out.println("\n	  MENU		");
 				System.out.printf("\n---------------------------\n");
 				System.out.printf("\n1. Opções de Cliente.");
-				System.out.printf("\n2. Opções de Funcionário.");
 				System.out.printf("\n0. Sair. -> ");
 
 				opcaoMenu = ler.nextInt();
@@ -34,8 +33,7 @@ public class MainSystem {
 				flagMenu = false;
 			} else if (opcaoMenu == 1) {
 				MenuClienteJDBC.menuCliente();
-			} else if (opcaoMenu == 2) {
-			} else if (opcaoMenu < 1 || opcaoMenu > 2) {
+			} else if (opcaoMenu < 1 || opcaoMenu > 1) {
 				System.out.print("\n---------------------------\n\n");
 				System.out.printf("\nINSIRA UMA OPÇÃO CORRETA!\n");
 				System.out.print("\n---------------------------\n\n");

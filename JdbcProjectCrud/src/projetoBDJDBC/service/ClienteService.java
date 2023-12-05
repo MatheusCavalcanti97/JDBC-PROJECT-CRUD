@@ -3,6 +3,7 @@ package projetoBDJDBC.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import projetoBDJDBC.exception.ClienteJaCadastradoException;
 import projetoBDJDBC.exception.ClienteNãoInseridoException;
 import projetoBDJDBC.exception.ListaVaziaException;
 import projetoBDJDBC.model.dao.ClienteDAOImplements;
@@ -18,7 +19,7 @@ public class ClienteService {
 		}
 	}
 
-	public void inserir(Cliente c) throws ClassNotFoundException, ClienteNãoInseridoException, SQLException {
+	public void inserir(Cliente c) throws ClassNotFoundException, ClienteNãoInseridoException, SQLException, ClienteJaCadastradoException, ListaVaziaException {
 		this.cDAO.inserir(c);
 	}
 
@@ -26,8 +27,8 @@ public class ClienteService {
 
 	}
 
-	public void deletar(Cliente c) {
-
+	public void deletarPorCpf(Cliente c) throws ClassNotFoundException, SQLException {
+		this.cDAO.deletarPorCpf(c);
 	}
 
 	public List<Cliente> listarTodos() throws ClassNotFoundException, SQLException, ListaVaziaException {
