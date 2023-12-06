@@ -106,8 +106,10 @@ public class ClienteView {
 											dataC = dia + "/" + mes + "/" + ano;
 											dataCadastrado = sdf.parse(dataC);
 
-											end = new Endereco(cidadeEndereco.toUpperCase(), estadoEndereco.toUpperCase());
-											c = new Cliente(cpfPessoa, nomePessoa.toUpperCase(), sobrenomePessoa.toUpperCase(), email.toUpperCase(), end,
+											end = new Endereco(cidadeEndereco.toUpperCase(),
+													estadoEndereco.toUpperCase());
+											c = new Cliente(cpfPessoa, nomePessoa.toUpperCase(),
+													sobrenomePessoa.toUpperCase(), email.toUpperCase(), end,
 													dataCadastrado);
 
 											ClienteView.getCS().inserir(c);
@@ -176,7 +178,7 @@ public class ClienteView {
 				System.out.print("\n---------------------------\n");
 				System.out.print("\nCLIENTE EXCLUÍDO!\n");
 				c = null;
-
+				break;
 			}
 		}
 	}
@@ -222,7 +224,7 @@ public class ClienteView {
 					try {
 						Scanner ler1 = new Scanner(System.in);
 
-						System.out.println("\n	  ESCOLHA UMA DAS OPÇÕES		");
+						System.out.println("\n	ESCOLHA UMA DAS OPÇÕES		");
 						System.out.printf("\n---------------------------\n");
 						System.out.printf("\n1. Atualiza Nome.");
 						System.out.printf("\n2. Atualizar Endereço.");
@@ -257,7 +259,13 @@ public class ClienteView {
 						System.out.print("\n---------------------------\n");
 						System.out.print("INFORME O CPF PARA ATUALIZAR INFORMAÇÕES: ");
 						cpf = ler2.nextLine();
-
+						System.out.print("\n---------------------------\n");
+						
+						c = ClienteView.getCS().buscarPorID(cpf);
+						
+						if(c == null) {
+							throw new ClienteNãoInseridoException("\nCLIENTE NÃO ENCONTRADO!");
+						}
 						for (int j = 0; j < lCliente.size(); j++) {
 
 							if (cpf.equalsIgnoreCase(lCliente.get(j).getCpfPessoa())) {
@@ -269,16 +277,14 @@ public class ClienteView {
 								String sobrenome = ler2.nextLine();
 
 								c = lCliente.get(j);
-								c.setNomePessoa(nome);
-								c.setSobrenomePessoa(sobrenome);
+								c.setNomePessoa(nome.toUpperCase());
+								c.setSobrenomePessoa(sobrenome.toUpperCase());
 								ClienteView.getCS().atualizar(c);
 
 								System.out.print("\n---------------------------\n");
 								System.out.print("\nCLIENTE ATUALIZADO!\n");
 								flagMenu1 = false;
 
-							} else {
-								throw new ClienteNãoInseridoException("\nCPF DE CLIENTE NÃO ENCONTRADO!\n");
 							}
 						}
 					} else if (opcaoMenu1 < 1 || opcaoMenu1 > 3) {
@@ -308,19 +314,20 @@ public class ClienteView {
 		}
 	}
 
-	public void buscarporID() throws ListaVaziaException, ClassNotFoundException, ClienteNãoInseridoException, SQLException  {
-		
-		if(ClienteView.getCS().listarTodos().size() < 1) {
+	public void buscarporID()
+			throws ListaVaziaException, ClassNotFoundException, ClienteNãoInseridoException, SQLException {
+
+		if (ClienteView.getCS().listarTodos().size() < 1) {
 			throw new ListaVaziaException("\nNÃO HÁ CLIENTES CADASTRADOS!\n");
 		}
-		
+
 		System.out.print("\n---------------------------\n");
 		System.out.print("INFORME O CPF DO CLIENTE: ");
 		String cpfCliente = ler.nextLine();
-		
+
 		Cliente c = ClienteView.getCS().buscarPorID(cpfCliente);
-		
-		if(c != null) {
+
+		if (c != null) {
 			System.out.print("\n---------------------------\n");
 			System.out.println(c.toString());
 		} else {
