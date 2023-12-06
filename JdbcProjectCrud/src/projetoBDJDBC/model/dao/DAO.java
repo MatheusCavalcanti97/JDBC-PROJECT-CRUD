@@ -10,7 +10,7 @@ import projetoBDJDBC.model.entidades.Cliente;
 
 public interface DAO<T> {
 
-	public void inserir(T e) throws ClienteNãoInseridoException, ClassNotFoundException, SQLException, ClienteJaCadastradoException, ListaVaziaException;
+	public void inserir(T e) throws ClienteNãoInseridoException, ClassNotFoundException, SQLException;
 
 	public void deletarPorCpf(T e) throws SQLException, ClassNotFoundException;
 
@@ -19,5 +19,7 @@ public interface DAO<T> {
 	public List<T> listarTodos() throws ClassNotFoundException, SQLException, ListaVaziaException;
 
 	public Cliente buscarPorId(String str) throws ClassNotFoundException;
+	
+	public void removerTodos() throws SQLException, ClassNotFoundException;
 
 }

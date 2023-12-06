@@ -3,6 +3,8 @@ package projetoBDJDBC.view;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import projetoBDJDBC.exception.ListaVaziaException;
+
 public class MainSystem {
 
 	public void run() {

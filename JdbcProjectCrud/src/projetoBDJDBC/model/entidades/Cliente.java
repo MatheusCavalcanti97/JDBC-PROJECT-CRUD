@@ -10,7 +10,7 @@ public class Cliente extends Pessoa {
 
 	public Cliente() {}
 	
-	public Cliente(Integer idPessoa, String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email,
+	public Cliente(int idPessoa, String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email,
 			Endereco endereco, Date dataDeCadastro) {
 		super(idPessoa, nomePessoa, sobrenomePessoa, cpfPessoa, email, endereco);
 		this.dataDeCadastro = dataDeCadastro;
@@ -36,7 +36,7 @@ public class Cliente extends Pessoa {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		dataC = sdf.format(this.dataDeCadastro);
 		return "NOME: " + this.nomePessoa + " -- SOBRENOME: " + this.sobrenomePessoa
-				+ "\nCPF: " + this.cpfPessoa + " -- Data de cadastro: " + dataC;
+				+ " -- CPF: " + this.cpfPessoa + " -- Data de cadastro: " + dataC;
 	}
 
 	@Override

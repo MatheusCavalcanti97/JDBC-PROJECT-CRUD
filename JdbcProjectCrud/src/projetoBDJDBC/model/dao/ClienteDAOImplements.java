@@ -52,40 +52,35 @@ public class ClienteDAOImplements implements DAO<Cliente> {
 	}
 
 	@Override
-	public void inserir(Cliente c) throws ClienteNãoInseridoException, ClassNotFoundException, SQLException,
-			ClienteJaCadastradoException, ListaVaziaException {
+	public void inserir(Cliente c) throws ClienteNãoInseridoException, ClassNotFoundException, SQLException{
 		int verificacaoTamTupla = 0;
 		Connection con = null;
 		PreparedStatement ps = null;
 
-		if (this.clienteJaCadastrado(c) == false) {
-			try {
+		try {
 
-				con = conn.getConnectionJDBC();
-				String sql = "insert into cliente(NOMEPESSOA,SOBRENOMEPESSOA, CPFPESSOA, EMAIL, CIDADEENDERECO, ESTADOENDERECO, DATACADASTRO) values (?, ?, ?, ?, ?, ?, ?)";
-				ps = con.prepareStatement(sql);
+			con = conn.getConnectionJDBC();
+			String sql = "insert into cliente(NOMEPESSOA,SOBRENOMEPESSOA, CPFPESSOA, EMAIL, CIDADEENDERECO, ESTADOENDERECO, DATACADASTRO) values (?, ?, ?, ?, ?, ?, ?)";
+			ps = con.prepareStatement(sql);
 
-				ps.setString(1, c.getNomePessoa());
-				ps.setString(2, c.getSobrenomePessoa());
-				ps.setString(3, c.getCpfPessoa());
-				ps.setString(4, c.getEmail());
-				ps.setString(5, c.getEndereco().getCidade());
-				ps.setString(6, c.getEndereco().getEstado());
-				ps.setDate(7, new Date(c.getDataDeCadastro().getTime()));
+			ps.setString(1, c.getNomePessoa());
+			ps.setString(2, c.getSobrenomePessoa());
+			ps.setString(3, c.getCpfPessoa());
+			ps.setString(4, c.getEmail());
+			ps.setString(5, c.getEndereco().getCidade());
+			ps.setString(6, c.getEndereco().getEstado());
+			ps.setDate(7, new Date(c.getDataDeCadastro().getTime()));
 
-				verificacaoTamTupla = ps.executeUpdate();
+			verificacaoTamTupla = ps.executeUpdate();
 
-				if (verificacaoTamTupla < 1) {
-					throw new ClienteNãoInseridoException("\nO CLIENTE NÃO FOI INSERIDO NO DATABASE!\n");
-				}
-
-			} catch (ClassNotFoundException e) {
-				throw new ClassNotFoundException("CLASSE NÃO ENCONTRADA");
-			} catch (SQLException e) {
-				e.printStackTrace();
+			if (verificacaoTamTupla < 1) {
+				throw new ClienteNãoInseridoException("\nO CLIENTE NÃO FOI INSERIDO NO DATABASE!\n");
 			}
-		} else {
-			throw new ClienteJaCadastradoException("\nCliente JÁ CADASTRADO!\n");
+
+		} catch (ClassNotFoundException e) {
+			throw new ClassNotFoundException("CLASSE NÃO ENCONTRADA");
+		} catch (SQLException e) {
+			throw new ClienteNãoInseridoException("\nO CLIENTE NÃO FOI INSERIDO NO DATABASE!\n");
 		}
 
 	}
@@ -119,28 +114,23 @@ public class ClienteDAOImplements implements DAO<Cliente> {
 	public void atualizar(Cliente c) throws ClassNotFoundException, ClienteNãoInseridoException, SQLException {
 		Connection conect = null;
 		PreparedStatement ps = null;
-
 		try {
+
 			conect = conn.getConnectionJDBC();
+			String sql = "update CLIENTE set nomepessoa=?, sobrenomepessoa=?, email=?, cidadeendereco = ?, estadoendereco = ?, datacadastro = ? where cpfpessoa=?";
 
-			String sqlConsult = "update cliente set NOMEPESSOA = ?, SOBRENOMEPESSOA = ?, CPFPESSOA = ?, EMAIL = ?, CIDADEENDERECO = ?, ESTADOENDERECO = ?, DATACADASTRO = ? where CPFPESSOA = ?";
-
-			ps = conect.prepareStatement(sqlConsult);
+			ps = conect.prepareStatement(sql);
 			ps.setString(1, c.getNomePessoa());
 			ps.setString(2, c.getSobrenomePessoa());
-			ps.setString(3, c.getCpfPessoa());
-			ps.setString(4, c.getEmail());
-			ps.setString(5, c.getEndereco().getCidade());
-			ps.setString(6, c.getEndereco().getEstado());
-			ps.setDate(7, new Date(c.getDataDeCadastro().getTime()));
-			int verificacaoTamTupla = ps.executeUpdate();
-
-			if (verificacaoTamTupla < 1) {
-				throw new ClienteNãoInseridoException("\nO CLIENTE NÃO FOI INSERIDO NO DATABASE!\n");
-			}
+			ps.setString(3, c.getEmail());
+			ps.setString(4, c.getEndereco().getCidade());
+			ps.setString(5, c.getEndereco().getEstado());
+			ps.setDate(6, new Date(c.getDataDeCadastro().getTime()));
+			ps.setString(7, c.getCpfPessoa());
+			ps.executeUpdate();
 
 		} catch (SQLException e) {
-			throw new SQLException("VERIFIQUE AS INFORMAÇÕES DE COMUNICACAO COM O DAO");
+			e.printStackTrace();
 		}
 	}
 
@@ -177,10 +167,6 @@ public class ClienteDAOImplements implements DAO<Cliente> {
 				c = new Cliente(idCliente, nomePessoa, sobrenomePessoa, cpfPessoa, email, end,
 						new java.util.Date(dataC.getTime()));
 				clientes.add(c);
-			}
-
-			if (clientes.size() < 1) {
-				throw new ListaVaziaException("\nNÃO HÁ CLIENTE(S) CADASTRADO(S).\n");
 			}
 
 		} catch (ClassNotFoundException e1) {
@@ -227,7 +213,7 @@ public class ClienteDAOImplements implements DAO<Cliente> {
 			}
 
 		} catch (SQLException e) {
-			throw new ClassNotFoundException("CLASSE NÃO ENCONTRADA");
+			throw new ClassNotFoundException("CLIENTE NÃO ENCONTRADO!");
 		}
 
 		return c;
@@ -247,6 +233,25 @@ public class ClienteDAOImplements implements DAO<Cliente> {
 		}
 
 		return var;
+	}
+	
+	@Override
+	public void removerTodos() throws SQLException, ClassNotFoundException {
+		Connection conect = null;
+		Statement statement = null;
+		
+		try {
+			
+			conect = conn.getConnectionJDBC();
+			
+			String sqlConsult = "delete from cliente;";
+			
+			statement = conect.createStatement();
+			statement.executeUpdate(sqlConsult);
+			
+		} catch (SQLException e) {
+			throw new SQLException("\nERRO AO DELETAR TODOS OS CLIENTES!\n"); 
+		}
 	}
 
 }

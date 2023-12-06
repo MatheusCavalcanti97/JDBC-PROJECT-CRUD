@@ -40,141 +40,102 @@ public class ClienteView {
 		return cv;
 	}
 
-	public void inserir()
-			throws CpfException, ClassNotFoundException, AtributosNaoNulosNaoVaziosException, ParseException,
-			ClienteNãoInseridoException, SQLException, ClienteJaCadastradoException, ListaVaziaException {
-
+	public void inserir() throws CpfException, ClassNotFoundException, AtributosNaoNulosNaoVaziosException,
+			ParseException, ClienteNãoInseridoException, SQLException {
+		Scanner ler1 = new Scanner(System.in);
 		Cliente c = null;
 		Endereco end = null;
 		Date dataCadastrado = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		String nomePessoa = "", sobrenomePessoa = "", cpfPessoa = "", email = "", cidadeEndereco = "",
+		String nomePessoa = "", sobrenomePessoa = "", email = "", cidadeEndereco = "",
 				estadoEndereco = "", dataC = "";
 		int dia = 0, mes = 0, ano = 0;
 
-		Integer opcaoMenu = null;
-		Boolean var = true;
+		System.out.print("\n---------------------------\n");
+		System.out.print("CPF: ");
+		String cpfPessoa = ler1.nextLine();
+		
+		
 
-		while (var) {
+		if (ValidacaoProjectJDBCIO.validaCpf(cpfPessoa) == true) {
+			System.out.print("NOME: ");
+			nomePessoa = ler1.nextLine();
 
-			try {
-				Scanner ler = new Scanner(System.in);
-				System.out.print("\n---------------------------\n");
-				System.out.print("	  INSERIR CLIENTE		");
-				System.out.print("\n---------------------------\n");
-				System.out.print("\n1. Deseja Inserir?" + "\n0. Sair." + "-> ");
+			System.out.print("SOBRENOME: ");
+			sobrenomePessoa = ler1.nextLine();
 
-				opcaoMenu = ler.nextInt();
-				System.out.print("\n---------------------------\n");
-			} catch (InputMismatchException e) {
-				System.out.print("\n---------------------------\n");
-				System.out.print("CARACTER INSERIDO INCORRETAMENTE.");
-				System.out.print("\nTENTE NOVAMENTE.");
-				System.out.print("\n---------------------------\n");
-				continue;
-			}
+			System.out.print("EMAIL: ");
+			email = ler1.nextLine();
 
-			if (opcaoMenu == 0) {
-				System.out.print("\n---------------------------\n");
-				System.out.print("RETORNANDO PRO MENU ANTERIOR.");
-				System.out.print("\n---------------------------\n");
-				var = false;
-			} else if (opcaoMenu == 1) {
+			System.out.print("\n---------------------------\n");
+			System.out.print("INFO. ENDEREÇO");
+			System.out.print("\n---------------------------\n");
 
-				System.out.print("\n---------------------------\n");
-				System.out.print("\nCPF: ");
-				cpfPessoa = ler.nextLine();
+			System.out.print("CIDADE: ");
+			cidadeEndereco = ler1.nextLine();
 
-				if (ValidacaoProjectJDBCIO.validaCpf(cpfPessoa) == true) {
-					System.out.print("NOME: ");
-					nomePessoa = ler.nextLine();
+			System.out.print("ESTADO: ");
+			estadoEndereco = ler1.nextLine();
 
-					System.out.print("SOBRENOME: ");
-					sobrenomePessoa = ler.nextLine();
+			if (ValidacaoProjectJDBCIO.verificacaoStringNula(nomePessoa) == false
+					&& ValidacaoProjectJDBCIO.verificacaoStringVazia(nomePessoa) == false) {
+				if (ValidacaoProjectJDBCIO.verificacaoStringNula(sobrenomePessoa) == false
+						&& ValidacaoProjectJDBCIO.verificacaoStringVazia(sobrenomePessoa) == false) {
+					if (ValidacaoProjectJDBCIO.verificacaoStringNula(email) == false
+							&& ValidacaoProjectJDBCIO.verificacaoStringVazia(email) == false) {
+						if (ValidacaoProjectJDBCIO.verificacaoStringNula(cidadeEndereco) == false
+								&& ValidacaoProjectJDBCIO.verificacaoStringVazia(cidadeEndereco) == false) {
+							if (ValidacaoProjectJDBCIO.verificacaoStringNula(estadoEndereco) == false
+									&& ValidacaoProjectJDBCIO.verificacaoStringVazia(estadoEndereco) == false) {
 
-					System.out.print("EMAIL: ");
-					email = ler.nextLine();
+								System.out.print("\n---------------------------\n");
+								System.out.print("\n   DATA DE CADASTRO\n");
+								System.out.print("\n---------------------------\n");
 
-					System.out.print("\n---------------------------\n");
-					System.out.print("INFO. ENDEREÇO");
-					System.out.print("\n---------------------------\n");
+								System.out.print("DIA DE CADASTRO: ");
+								dia = ler1.nextInt();
 
-					System.out.print("CIDADE: ");
-					cidadeEndereco = ler.nextLine();
+								System.out.print("MES DE CADASTRO: ");
+								mes = ler1.nextInt();
 
-					System.out.print("ESTADO: ");
-					estadoEndereco = ler.nextLine();
+								System.out.print("ANO DE CADASTRO: ");
+								ano = ler1.nextInt();
 
-					if (ValidacaoProjectJDBCIO.verificacaoStringNula(nomePessoa) == false
-							&& ValidacaoProjectJDBCIO.verificacaoStringVazia(nomePessoa) == false) {
-						if (ValidacaoProjectJDBCIO.verificacaoStringNula(sobrenomePessoa) == false
-								&& ValidacaoProjectJDBCIO.verificacaoStringVazia(sobrenomePessoa) == false) {
-							if (ValidacaoProjectJDBCIO.verificacaoStringNula(email) == false
-									&& ValidacaoProjectJDBCIO.verificacaoStringVazia(email) == false) {
-								if (ValidacaoProjectJDBCIO.verificacaoStringNula(cidadeEndereco) == false
-										&& ValidacaoProjectJDBCIO.verificacaoStringVazia(cidadeEndereco) == false) {
-									if (ValidacaoProjectJDBCIO.verificacaoStringNula(estadoEndereco) == false
-											&& ValidacaoProjectJDBCIO.verificacaoStringVazia(estadoEndereco) == false) {
+								if (ValidacaoProjectJDBCIO.validarData(dia, mes, ano) == true) {
 
-										System.out.print("\n---------------------------\n");
-										System.out.print("\n   DATA DE CADASTRO\n");
-										System.out.print("\n---------------------------\n");
+									dataC = dia + "/" + mes + "/" + ano;
+									dataCadastrado = sdf.parse(dataC);
 
-										System.out.print("DIA DE CADASTRO: ");
-										dia = ler.nextInt();
+									end = new Endereco(cidadeEndereco, estadoEndereco);
+									c = new Cliente(nomePessoa, sobrenomePessoa, cpfPessoa, email, end, dataCadastrado);
 
-										System.out.print("MES DE CADASTRO: ");
-										mes = ler.nextInt();
+									ClienteView.getCS().inserir(c);
 
-										System.out.print("ANO DE CADASTRO: ");
-										ano = ler.nextInt();
-
-										if (ValidacaoProjectJDBCIO.validarData(dia, mes, ano) == true) {
-
-											dataC = dia + "/" + mes + "/" + ano;
-											dataCadastrado = sdf.parse(dataC);
-
-											end = new Endereco(cidadeEndereco, estadoEndereco);
-											c = new Cliente(nomePessoa, sobrenomePessoa, cpfPessoa, email, end,
-													dataCadastrado);
-
-											ClienteView.getCS().inserir(c);
-
-											System.out.print("\n---------------------------\n");
-											System.out.print("CLIENTE INSERIDO!");
-										} else {
-											throw new ParseException("\nDATA INCORRETA!", 1);
-										}
-									} else {
-										throw new AtributosNaoNulosNaoVaziosException(
-												"\nO CAMPO ESTADO DEVE ESTAR PREENCHIDO!\n");
-									}
+									System.out.print("\n---------------------------\n");
+									System.out.print("CLIENTE INSERIDO!");
+									c = null;
 								} else {
-									throw new AtributosNaoNulosNaoVaziosException(
-											"\nO CAMPO CIDADE DEVE ESTAR PREENCHIDO!\n");
+									throw new ParseException("\nDATA INCORRETA!", 1);
 								}
 							} else {
 								throw new AtributosNaoNulosNaoVaziosException(
-										"\nO CAMPO EMAIL DEVE ESTAR PREENCHIDO!\n");
+										"\nO CAMPO ESTADO DEVE ESTAR PREENCHIDO!\n");
 							}
 						} else {
-							throw new AtributosNaoNulosNaoVaziosException(
-									"\nO CAMPO SOBRENOME DEVE ESTAR PREENCHIDO!\n");
+							throw new AtributosNaoNulosNaoVaziosException("\nO CAMPO CIDADE DEVE ESTAR PREENCHIDO!\n");
 						}
 					} else {
-						throw new AtributosNaoNulosNaoVaziosException("\nO CAMPO NOME DEVE ESTAR PREENCHIDO!\n");
+						throw new AtributosNaoNulosNaoVaziosException("\nO CAMPO EMAIL DEVE ESTAR PREENCHIDO!\n");
 					}
 				} else {
-					throw new CpfException("\nCPF INVALIDO!\n");
+					throw new AtributosNaoNulosNaoVaziosException("\nO CAMPO SOBRENOME DEVE ESTAR PREENCHIDO!\n");
 				}
-
 			} else {
-				System.out.print("\n---------------------------\n\n");
-				System.out.printf("\nINSIRA UMA OPÇÃO CORRETA!\n");
-				System.out.print("\n---------------------------\n\n");
+				throw new AtributosNaoNulosNaoVaziosException("\nO CAMPO NOME DEVE ESTAR PREENCHIDO!\n");
 			}
+		} else {
+			throw new CpfException("\nCPF INVALIDO!\n");
 		}
-
 	}
 
 	public void deletarPorCpf()
@@ -221,7 +182,7 @@ public class ClienteView {
 				}
 
 				System.out.print("\n---------------------------\n");
-				System.out.print("INFORME O CPF PARA EXCLUIR: ");
+				System.out.printf("INFORME O CPF PARA EXCLUIR: ");
 				cpf = ler.nextLine();
 
 				for (int j = 0; j < lCliente.size(); j++) {
@@ -233,6 +194,7 @@ public class ClienteView {
 						System.out.print("\n---------------------------\n");
 						System.out.print("\nCLIENTE EXCLUÍDO!\n");
 						c = null;
+						varFlagMenu = false;
 						break;
 
 					} else {
@@ -244,7 +206,8 @@ public class ClienteView {
 
 	}
 
-	public void atualizar() throws ClassNotFoundException, SQLException, ListaVaziaException, ClienteNãoInseridoException {
+	public void atualizar()
+			throws ClassNotFoundException, SQLException, ListaVaziaException, ClienteNãoInseridoException {
 
 		Integer opcaoMenu = null;
 		boolean varFlagMenu = true;
@@ -254,7 +217,7 @@ public class ClienteView {
 			try {
 				Scanner ler = new Scanner(System.in);
 				System.out.print("\n---------------------------\n");
-				System.out.print("	  ATUALIZAR CLIENTE		");
+				System.out.print("	ATUALIZAR CLIENTE		");
 				System.out.print("\n---------------------------\n");
 				System.out.print("\n1. Deseja Atualizar um Cliente?." + "\n0. Sair." + "-> ");
 
@@ -276,24 +239,14 @@ public class ClienteView {
 			} else if (opcaoMenu == 1) {
 				Cliente c = null;
 				String cpf = null;
-				List<Cliente> lCliente = ClienteView.getCS().listarTodos();
-
-				System.out.print("\n---------------------------\n");
-				System.out.print("\nLISTA DE CLIENTE\n");
-				System.out.print("\n---------------------------\n");
-
-				for (int i = 0; i < lCliente.size(); i++) {
-					System.out.println((i + 1) + "º - " + lCliente.get(i).getNomePessoa() + " - CPF: "
-							+ lCliente.get(i).getCpfPessoa());
-				}
 
 				Boolean flagMenu1 = true;
 				Integer opcaoMenu1 = null;
 				while (flagMenu1) {
 
 					try {
-						Scanner ler = new Scanner(System.in);
-						System.out.printf("\n---------------------------\n");
+						Scanner ler1 = new Scanner(System.in);
+
 						System.out.println("\n	  ESCOLHA UMA DAS OPÇÕES		");
 						System.out.printf("\n---------------------------\n");
 						System.out.printf("\n1. Atualiza Nome.");
@@ -301,7 +254,7 @@ public class ClienteView {
 						System.out.printf("\n3. Atualizar Email.");
 						System.out.printf("\n0. Sair. -> ");
 
-						opcaoMenu1 = ler.nextInt();
+						opcaoMenu1 = ler1.nextInt();
 						System.out.printf("\n---------------------------\n");
 					} catch (InputMismatchException e) {
 						System.out.print("\n---------------------------\n");
@@ -315,22 +268,39 @@ public class ClienteView {
 						System.out.println("PROGRAMA ENCERRADO.");
 						flagMenu1 = false;
 					} else if (opcaoMenu1 == 1) {
+						Scanner ler2 = new Scanner(System.in);
+						System.out.print("\n---------------------------\n");
+						System.out.print("\nLISTA DE CLIENTE\n");
+						System.out.print("\n---------------------------\n");
+
+						List<Cliente> lCliente = ClienteView.getCS().listarTodos();
+						for (int i = 0; i < lCliente.size(); i++) {
+							System.out.println((lCliente.get(i).getIdPessoa()) + "º - "
+									+ lCliente.get(i).getNomePessoa() + " - CPF: " + lCliente.get(i).getCpfPessoa());
+						}
+
 						System.out.print("\n---------------------------\n");
 						System.out.print("INFORME O CPF PARA ATUALIZAR INFORMAÇÕES: ");
-						cpf = ler.nextLine();
-						
-						
+						cpf = ler2.nextLine();
+
 						for (int j = 0; j < lCliente.size(); j++) {
 
 							if (cpf.equalsIgnoreCase(lCliente.get(j).getCpfPessoa())) {
-								
+
+								System.out.print("NOME: ");
+								String nome = ler2.nextLine();
+
+								System.out.print("SOBRENOME: ");
+								String sobrenome = ler2.nextLine();
+
 								c = lCliente.get(j);
-								ClienteView.getCS().deletarPorCpf(c);
+								c.setNomePessoa(nome);
+								c.setSobrenomePessoa(sobrenome);
+								ClienteView.getCS().atualizar(c);
 
 								System.out.print("\n---------------------------\n");
-								System.out.print("\nCLIENTE EXCLUÍDO!\n");
-								c = null;
-								break;
+								System.out.print("\nCLIENTE ATUALIZADO!\n");
+								flagMenu1 = false;
 
 							} else {
 								throw new ClienteNãoInseridoException("\nCPF DE CLIENTE NÃO ENCONTRADO!\n");
@@ -359,8 +329,6 @@ public class ClienteView {
 		ClienteService cs = ClienteView.getCS();
 		List<Cliente> cliente = cs.listarTodos();
 
-		System.out.println(cliente.size());
-
 		System.out.print("\n---------------------------\n");
 		System.out.print("LISTA DE CLIENTES CADASTRADOS.");
 		System.out.print("\n---------------------------\n");
@@ -373,6 +341,11 @@ public class ClienteView {
 
 	public void buscarporID() {
 
+	}
+
+	public void deletarTodos() throws ClassNotFoundException, SQLException, ListaVaziaException {
+		ClienteService cs = ClienteView.getCS();
+		cs.removerTodos();
 	}
 
 }

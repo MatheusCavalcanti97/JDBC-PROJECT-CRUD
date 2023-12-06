@@ -26,7 +26,8 @@ public class MenuClienteJDBC {
 				System.out.print("	  CLIENTE		");
 				System.out.print("\n---------------------------\n");
 				System.out.print("\n1. Inserir." + "\n2. Atualizar." + "\n3. Deletar Cliente Por Cpf."
-						+ "\n4. Listar Todos os Cliente." +  "\n5. Buscar Cliente por CPF."+ "\n6. Deletar todos os Clientes." + "\n0. Sair." + "-> ");
+						+ "\n4. Listar Todos os Cliente." + "\n5. Buscar Cliente por CPF."
+						+ "\n6. Deletar todos os Clientes." + "\n0. Sair." + "-> ");
 
 				opcaoMenu = ler.nextInt();
 				System.out.print("\n---------------------------\n");
@@ -67,16 +68,10 @@ public class MenuClienteJDBC {
 				} catch (CpfException ex6) {
 					System.out.print("\n---------------------------\n");
 					System.out.print(ex6.getMessage());
-				} catch (ClienteJaCadastradoException ex7) {
-					System.out.print("\n---------------------------\n");
-					System.out.print(ex7.getMessage());
-				} catch (ListaVaziaException ex8) {
-					System.out.print("\n---------------------------\n");
-					System.out.print(ex8.getMessage());
 				}
 
 			} else if (opcaoMenu == 2) {
-				
+
 				try {
 					ClienteView.getInstance().atualizar();
 				} catch (ClassNotFoundException ex1) {
@@ -88,7 +83,7 @@ public class MenuClienteJDBC {
 				} catch (ListaVaziaException ex3) {
 					System.out.print("\n---------------------------\n");
 					System.out.print(ex3.getMessage());
-				} catch(ClienteNãoInseridoException ex4) {
+				} catch (ClienteNãoInseridoException ex4) {
 					System.out.print("\n---------------------------\n");
 					System.out.print(ex4.getMessage());
 				}
@@ -96,16 +91,16 @@ public class MenuClienteJDBC {
 			} else if (opcaoMenu == 3) {
 				try {
 					ClienteView.getInstance().deletarPorCpf();
-				} catch(ClassNotFoundException ex1) {
+				} catch (ClassNotFoundException ex1) {
 					System.out.print("\n---------------------------\n");
 					System.out.print(ex1.getMessage());
-				} catch(SQLException ex2) {
+				} catch (SQLException ex2) {
 					System.out.print("\n---------------------------\n");
 					System.out.print(ex2.getMessage());
-				} catch(ListaVaziaException ex3) {
+				} catch (ListaVaziaException ex3) {
 					System.out.print("\n---------------------------\n");
 					System.out.print(ex3.getMessage());
-				} catch(ClienteNãoInseridoException ex4) {
+				} catch (ClienteNãoInseridoException ex4) {
 					System.out.print("\n---------------------------\n");
 					System.out.print(ex4.getMessage());
 				}
@@ -127,6 +122,19 @@ public class MenuClienteJDBC {
 
 			} else if (opcaoMenu == 5) {
 
+			} else if (opcaoMenu == 6) {
+				try {
+					ClienteView.getInstance().deletarTodos();
+				} catch (ClassNotFoundException ex1) {
+					System.out.print("\n---------------------------\n");
+					System.out.print(ex1.getMessage());
+				} catch (SQLException ex2) {
+					System.out.print("\n---------------------------\n");
+					System.out.print(ex2.getMessage());
+				} catch(ListaVaziaException ex3) {
+					System.out.print("\n---------------------------\n");
+					System.out.print(ex3.getMessage());
+				}
 			} else {
 				System.out.print("\n---------------------------\n\n");
 				System.out.printf("\nINSIRA UMA OPÇÃO CORRETA!\n");
