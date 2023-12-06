@@ -3,43 +3,31 @@ package projetoBDJDBC.model.entidades;
 import java.util.Objects;
 
 public abstract class Pessoa {
-
-	public int idPessoa;
+	
+	public String cpfPessoa;
 	public String nomePessoa;
 	public String sobrenomePessoa;
-	public String cpfPessoa;
 	public String email;
 	public Endereco endereco;
 
-	public Pessoa() { }
+	public Pessoa() {
+	}
 
-	public Pessoa(String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email, Endereco endereco) {
+	public Pessoa(String cpfPessoa, String nomePessoa, String sobrenomePessoa, String email, Endereco endereco) {
 		super();
-
+		this.cpfPessoa = cpfPessoa;
 		this.nomePessoa = nomePessoa;
 		this.sobrenomePessoa = sobrenomePessoa;
-		this.cpfPessoa = cpfPessoa;
 		this.email = email;
 		this.endereco = endereco;
 	}
 
-	public Pessoa(int idPessoa, String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email,
-			Endereco endereco) {
-		super();
-		this.idPessoa = idPessoa;
-		this.nomePessoa = nomePessoa;
-		this.sobrenomePessoa = sobrenomePessoa;
+	public String getCpfPessoa() {
+		return cpfPessoa;
+	}
+
+	public void setCpfPessoa(String cpfPessoa) {
 		this.cpfPessoa = cpfPessoa;
-		this.email = email;
-		this.endereco = endereco;
-	}
-
-	public int getIdPessoa() {
-		return idPessoa;
-	}
-
-	public void setIdPessoa(int idPessoa) {
-		this.idPessoa = idPessoa;
 	}
 
 	public String getNomePessoa() {
@@ -58,13 +46,6 @@ public abstract class Pessoa {
 		this.sobrenomePessoa = sobrenomePessoa;
 	}
 
-	public String getCpfPessoa() {
-		return cpfPessoa;
-	}
-
-	public void setCpfPessoa(String cpfPessoa) {
-		this.cpfPessoa = cpfPessoa;
-	}
 
 	public String getEmail() {
 		return email;
@@ -84,7 +65,7 @@ public abstract class Pessoa {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cpfPessoa, email, endereco, idPessoa, nomePessoa, sobrenomePessoa);
+		return Objects.hash(cpfPessoa, email, endereco, nomePessoa, sobrenomePessoa);
 	}
 
 	@Override
@@ -97,8 +78,7 @@ public abstract class Pessoa {
 			return false;
 		Pessoa other = (Pessoa) obj;
 		return Objects.equals(cpfPessoa, other.cpfPessoa) && Objects.equals(email, other.email)
-				&& Objects.equals(endereco, other.endereco) && idPessoa == other.idPessoa
-				&& Objects.equals(nomePessoa, other.nomePessoa)
+				&& Objects.equals(endereco, other.endereco) && Objects.equals(nomePessoa, other.nomePessoa)
 				&& Objects.equals(sobrenomePessoa, other.sobrenomePessoa);
 	}
 

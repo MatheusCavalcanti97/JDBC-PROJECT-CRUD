@@ -8,16 +8,11 @@ public class Cliente extends Pessoa {
 
 	private Date dataDeCadastro;
 
-	public Cliente() {}
-	
-	public Cliente(int idPessoa, String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email,
-			Endereco endereco, Date dataDeCadastro) {
-		super(idPessoa, nomePessoa, sobrenomePessoa, cpfPessoa, email, endereco);
-		this.dataDeCadastro = dataDeCadastro;
+	public Cliente() {
 	}
 
-	public Cliente(String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email,
-			Endereco endereco, Date dataDeCadastro) {
+	public Cliente(String nomePessoa, String sobrenomePessoa, String cpfPessoa, String email, Endereco endereco,
+			Date dataDeCadastro) {
 		super(nomePessoa, sobrenomePessoa, cpfPessoa, email, endereco);
 		this.dataDeCadastro = dataDeCadastro;
 	}
@@ -29,14 +24,14 @@ public class Cliente extends Pessoa {
 	public void setDataDeCadastro(Date dataDeCadastro) {
 		this.dataDeCadastro = dataDeCadastro;
 	}
-	
+
 	@Override
 	public String toString() {
 		String dataC = " ";
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		dataC = sdf.format(this.dataDeCadastro);
-		return "NOME: " + this.nomePessoa + " -- SOBRENOME: " + this.sobrenomePessoa
-				+ " -- CPF: " + this.cpfPessoa + " -- Data de cadastro: " + dataC;
+		return "NOME: " + this.nomePessoa + " -- SOBRENOME: " + this.sobrenomePessoa + " -- CPF: " + this.cpfPessoa
+				+ " -- Data de cadastro: " + dataC;
 	}
 
 	@Override

@@ -38,14 +38,11 @@ public class ClienteService {
 		return cDAO.listarTodos();
 	}
 
-	public void buscarPorID(String cpf) throws ListaVaziaException, ClassNotFoundException, SQLException {
-		if(cDAO.listarTodos().size() <  1) {
-			throw new ListaVaziaException("\nNÃO HÁ CLIENTES CADASTRADOS!\n");
-		}
-		this.buscarPorID(cpf);
+	public Cliente buscarPorID(String cpf) throws ClassNotFoundException {
+		return this.cDAO.buscarPorId(cpf);
 	}
 	
-	public void removerTodos()  throws SQLException, ClassNotFoundException, ListaVaziaException{
+	public void removerTodos() throws ListaVaziaException, ClassNotFoundException, SQLException{
 		if(cDAO.listarTodos().size() <  1) {
 			throw new ListaVaziaException("\nNÃO HÁ CLIENTES CADASTRADOS!\n");
 		}

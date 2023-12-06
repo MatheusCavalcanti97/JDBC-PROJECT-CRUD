@@ -27,19 +27,17 @@ public class ClienteDAOImplements implements DAO<Cliente> {
 //	ESTADOENDERECO VARCHAR(30) NOT NULL, - ok
 //	DATACADASTRO DATE NOT NULL,  - ok
 
-	public static final int IDPESSOA_COLUMN_ORDER = 1;
+	public static final int CPFPESSOA_COLUMN_ORDER = 1;
 	public static final int NOMEPESSOA_COLUMN_ORDER = 2;
 	public static final int SOBRENOMEPESSOA_COLUMN_ORDER = 3;
-	public static final int CPFPESSOA_COLUMN_ORDER = 4;
-	public static final int EMAIL_COLUMN_ORDER = 5;
-	public static final int CIDADEENDERECO_COLUMN_ORDER = 6;
-	public static final int ESTADOENDERECO_COLUMN_ORDER = 7;
-	public static final int DATACADASTRO_COLUMN_ORDER = 8;
+	public static final int EMAIL_COLUMN_ORDER = 4;
+	public static final int CIDADEENDERECO_COLUMN_ORDER = 5;
+	public static final int ESTADOENDERECO_COLUMN_ORDER = 6;
+	public static final int DATACADASTRO_COLUMN_ORDER = 7;
 
-	public static final String IDPESSOA_COLUMN_NAME = "idpessoa";
+	public static final String CPFPESSOA_COLUMN_NAME = "cpfpessoa";
 	public static final String NOMEPESSOA_COLUMN_NAME = "nomepessoa";
 	public static final String SOBRENOMEPESSOA_COLUMN_NAME = "sobrenomepessoa";
-	public static final String CPFPESSOA_COLUMN_NAME = "cpfpessoa";
 	public static final String EMAIL_COLUMN_NAME = "email";
 	public static final String CIDADEENDERECO_COLUMN_NAME = "cidadeendereco";
 	public static final String ESTADOENDERECO_COLUMN_NAME = "estadoendereco";
@@ -52,7 +50,7 @@ public class ClienteDAOImplements implements DAO<Cliente> {
 	}
 
 	@Override
-	public void inserir(Cliente c) throws ClienteNãoInseridoException, ClassNotFoundException, SQLException{
+	public void inserir(Cliente c) throws ClienteNãoInseridoException, ClassNotFoundException, SQLException {
 		int verificacaoTamTupla = 0;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -60,27 +58,23 @@ public class ClienteDAOImplements implements DAO<Cliente> {
 		try {
 
 			con = conn.getConnectionJDBC();
-			String sql = "insert into cliente(NOMEPESSOA,SOBRENOMEPESSOA, CPFPESSOA, EMAIL, CIDADEENDERECO, ESTADOENDERECO, DATACADASTRO) values (?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into cliente (cpfpessoa, nomepessoa,sobrenomepessoa, email, cidadeendereco, estadoendereco, datacadastro) values (?, ?, ?, ?, ?, ?, ?)";
 			ps = con.prepareStatement(sql);
 
-			ps.setString(1, c.getNomePessoa());
-			ps.setString(2, c.getSobrenomePessoa());
-			ps.setString(3, c.getCpfPessoa());
+			
+			ps.setString(1, c.getCpfPessoa());
+			ps.setString(2, c.getNomePessoa());
+			ps.setString(3, c.getSobrenomePessoa());
 			ps.setString(4, c.getEmail());
 			ps.setString(5, c.getEndereco().getCidade());
 			ps.setString(6, c.getEndereco().getEstado());
 			ps.setDate(7, new Date(c.getDataDeCadastro().getTime()));
-
 			verificacaoTamTupla = ps.executeUpdate();
-
-			if (verificacaoTamTupla < 1) {
-				throw new ClienteNãoInseridoException("\nO CLIENTE NÃO FOI INSERIDO NO DATABASE!\n");
-			}
 
 		} catch (ClassNotFoundException e) {
 			throw new ClassNotFoundException("CLASSE NÃO ENCONTRADA");
 		} catch (SQLException e) {
-			throw new ClienteNãoInseridoException("\nO CLIENTE NÃO FOI INSERIDO NO DATABASE!\n");
+			throw new ClienteNãoInseridoException("\nO CLIENTE NÃO FOI INSERIDO!\n");
 		}
 
 	}
@@ -95,14 +89,14 @@ public class ClienteDAOImplements implements DAO<Cliente> {
 
 			conect = conn.getConnectionJDBC();
 
-			String sql = "delete from CLIENTE where CPFPESSOA = ?";
+			String sql = "delete from cliente where cpfpessoa = ?";
 
 			ps = conect.prepareStatement(sql);
 			ps.setString(1, c.getCpfPessoa());
 			int qtd = ps.executeUpdate();
 
 			if (qtd < 1) {
-				throw new SQLException("Tupla n�o encontrada!");
+				throw new SQLException("\nCLIENTE NÃO ENCONTRADO!\n");
 			}
 
 		} catch (SQLException e) {
@@ -117,7 +111,7 @@ public class ClienteDAOImplements implements DAO<Cliente> {
 		try {
 
 			conect = conn.getConnectionJDBC();
-			String sql = "update CLIENTE set nomepessoa=?, sobrenomepessoa=?, email=?, cidadeendereco = ?, estadoendereco = ?, datacadastro = ? where cpfpessoa=?";
+			String sql = "update CLIENTE set nomepessoa=?, sobrenomepessoa=?, email=?, cidadeendereco = ?, estadoendereco = ? where cpfpessoa=?";
 
 			ps = conect.prepareStatement(sql);
 			ps.setString(1, c.getNomePessoa());
@@ -125,8 +119,7 @@ public class ClienteDAOImplements implements DAO<Cliente> {
 			ps.setString(3, c.getEmail());
 			ps.setString(4, c.getEndereco().getCidade());
 			ps.setString(5, c.getEndereco().getEstado());
-			ps.setDate(6, new Date(c.getDataDeCadastro().getTime()));
-			ps.setString(7, c.getCpfPessoa());
+			ps.setString(6, c.getCpfPessoa());
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -154,17 +147,17 @@ public class ClienteDAOImplements implements DAO<Cliente> {
 			clientes = new ArrayList<>();
 
 			while (resultSet.next()) {
-				int idCliente = resultSet.getInt(IDPESSOA_COLUMN_NAME);
+
+				String cpfPessoa = resultSet.getString(CPFPESSOA_COLUMN_NAME);
 				String nomePessoa = resultSet.getString(NOMEPESSOA_COLUMN_NAME);
 				String sobrenomePessoa = resultSet.getString(SOBRENOMEPESSOA_COLUMN_NAME);
-				String cpfPessoa = resultSet.getString(CPFPESSOA_COLUMN_NAME);
 				String email = resultSet.getString(EMAIL_COLUMN_NAME);
 				String cidadeendereco = resultSet.getString(CIDADEENDERECO_COLUMN_NAME);
 				String estadoendereco = resultSet.getString(ESTADOENDERECO_COLUMN_NAME);
 				Date dataC = resultSet.getDate(DATACADASTRO_COLUMN_NAME);
 
 				end = new Endereco(cidadeendereco, estadoendereco);
-				c = new Cliente(idCliente, nomePessoa, sobrenomePessoa, cpfPessoa, email, end,
+				c = new Cliente(cpfPessoa, nomePessoa, sobrenomePessoa, email, end,
 						new java.util.Date(dataC.getTime()));
 				clientes.add(c);
 			}
@@ -190,17 +183,16 @@ public class ClienteDAOImplements implements DAO<Cliente> {
 
 			conect = conn.getConnectionJDBC();
 
-			String sqlConsult = "select * from CLIENTE where CPFPESSOA = ?";
+			String sqlConsult = "select * from cliente where cpfpessoa = ?";
 
 			ps = conect.prepareStatement(sqlConsult);
 			ps.setString(1, cpf);
 			resultSet = ps.executeQuery();
 
 			if (resultSet.next()) {
-				int idCliente = resultSet.getInt(IDPESSOA_COLUMN_NAME);
+				String cpfPessoa = resultSet.getString(CPFPESSOA_COLUMN_NAME);
 				String nomePessoa = resultSet.getString(NOMEPESSOA_COLUMN_NAME);
 				String sobrenomePessoa = resultSet.getString(SOBRENOMEPESSOA_COLUMN_NAME);
-				String cpfPessoa = resultSet.getString(CPFPESSOA_COLUMN_NAME);
 				String email = resultSet.getString(EMAIL_COLUMN_NAME);
 				String cidadeendereco = resultSet.getString(CIDADEENDERECO_COLUMN_NAME);
 				String estadoendereco = resultSet.getString(ESTADOENDERECO_COLUMN_NAME);
@@ -208,7 +200,7 @@ public class ClienteDAOImplements implements DAO<Cliente> {
 
 				Date data = resultSet.getDate(DATACADASTRO_COLUMN_NAME);
 				end = new Endereco(cidadeendereco, estadoendereco);
-				c = new Cliente(idCliente, nomePessoa, sobrenomePessoa, cpfPessoa, email, end,
+				c = new Cliente(cpfPessoa, nomePessoa, sobrenomePessoa, email, end,
 						new java.util.Date(dataC.getTime()));
 			}
 
@@ -234,23 +226,23 @@ public class ClienteDAOImplements implements DAO<Cliente> {
 
 		return var;
 	}
-	
+
 	@Override
 	public void removerTodos() throws SQLException, ClassNotFoundException {
 		Connection conect = null;
 		Statement statement = null;
-		
+
 		try {
-			
+
 			conect = conn.getConnectionJDBC();
-			
+
 			String sqlConsult = "delete from cliente;";
-			
+
 			statement = conect.createStatement();
 			statement.executeUpdate(sqlConsult);
-			
+
 		} catch (SQLException e) {
-			throw new SQLException("\nERRO AO DELETAR TODOS OS CLIENTES!\n"); 
+			throw new SQLException("\nERRO AO DELETAR TODOS OS CLIENTES!\n");
 		}
 	}
 

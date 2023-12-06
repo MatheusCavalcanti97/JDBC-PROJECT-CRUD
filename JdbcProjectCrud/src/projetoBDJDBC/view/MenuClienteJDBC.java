@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import projetoBDJDBC.exception.ApenasLetrasException;
 import projetoBDJDBC.exception.AtributosNaoNulosNaoVaziosException;
 import projetoBDJDBC.exception.ClienteJaCadastradoException;
 import projetoBDJDBC.exception.ClienteNãoInseridoException;
@@ -68,6 +69,9 @@ public class MenuClienteJDBC {
 				} catch (CpfException ex6) {
 					System.out.print("\n---------------------------\n");
 					System.out.print(ex6.getMessage());
+				} catch (ApenasLetrasException ex7) {
+					System.out.print("\n---------------------------\n");
+					System.out.print(ex7.getMessage());
 				}
 
 			} else if (opcaoMenu == 2) {
@@ -121,7 +125,21 @@ public class MenuClienteJDBC {
 				}
 
 			} else if (opcaoMenu == 5) {
-
+				try {
+					ClienteView.getInstance().buscarporID();
+				} catch (ClassNotFoundException ex1) {
+					System.out.print("\n---------------------------\n");
+					System.out.print(ex1.getMessage());
+				} catch (ListaVaziaException ex2) {
+					System.out.print("\n---------------------------\n");
+					System.out.print(ex2.getMessage());
+				} catch (SQLException ex3) {
+					System.out.print("\n---------------------------\n");
+					System.out.print(ex3.getMessage());
+				} catch (ClienteNãoInseridoException ex4) {
+					System.out.print("\n---------------------------\n");
+					System.out.print(ex4.getMessage());
+				}
 			} else if (opcaoMenu == 6) {
 				try {
 					ClienteView.getInstance().deletarTodos();
@@ -131,7 +149,7 @@ public class MenuClienteJDBC {
 				} catch (SQLException ex2) {
 					System.out.print("\n---------------------------\n");
 					System.out.print(ex2.getMessage());
-				} catch(ListaVaziaException ex3) {
+				} catch (ListaVaziaException ex3) {
 					System.out.print("\n---------------------------\n");
 					System.out.print(ex3.getMessage());
 				}
